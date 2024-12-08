@@ -3,13 +3,18 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import sys, os, glob, time
+import matplotlib.pyplot as plt
 
 class Sensor:
     def __init__(self):
         print("sensor spoofed")
 
     def measure(self):
-        return dict(test_0="hola")
+        return {'particles 03um': 2,
+                'particles 05um': 3,
+                'particles 10um': 4,
+                'particles 50um': 5,
+                'particles 100um':6}
 
 if __name__ == "__main__":
     # instantiate sensor obj
@@ -47,3 +52,13 @@ if __name__ == "__main__":
             df_reading.to_csv(os.path.join(output_path, _filename), index=False)
 
         iters += 1
+
+    # visualize
+    fig = plt.figure(figsize=(16,8))
+    ax = fig.add_subplot()
+
+    for col in logfile.columns:
+        if "particle" in col:
+            ax.plot(logfile[col])
+
+    plt.show()
