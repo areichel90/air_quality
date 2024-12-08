@@ -35,9 +35,9 @@ if __name__ == "__main__":
 
         # add data to log file
         files = glob.glob(os.path.join(output_path, "*"))
-        print(">>> :", files)
+        print(">>>", files)
         if any(filename+".csv" in file for file in files):
-            logfile = pd.read_csv(filename+".csv")
+            logfile = pd.read_csv(os.path.join(output_path, filename+".csv"))
             logfile = pd.concat([logfile, df_reading], ignore_index=True)
             logfile.to_csv(os.path.join(output_path, filename+".csv"), index=False)
             print(logfile)
