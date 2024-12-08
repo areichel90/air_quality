@@ -45,12 +45,11 @@ if __name__ == "__main__":
             logfile = pd.read_csv(os.path.join(output_path, filename+".csv"))
             logfile = pd.concat([logfile, df_reading], ignore_index=True)
             logfile.to_csv(os.path.join(output_path, filename+".csv"), index=False)
-            print(logfile)
         else:
             _filename = filename+".csv"
             print("writing logfile to disk: ", _filename)
             df_reading.to_csv(os.path.join(output_path, _filename), index=False)
-
+        print(logfile)
         iters += 1
 
     # visualize
@@ -59,7 +58,7 @@ if __name__ == "__main__":
 
     for col in logfile.columns:
         if "particle" in col:
-            ax.plot(logfile[col], label=i)
+            ax.plot(logfile[col], label=col)
     outpath = os.path.join(output_path, f"test_vis_{starttime_time.hour}{starttime_time.minute}.png")
     print(f"saving image to: ", outpath)
     plt.savefig(outpath)
