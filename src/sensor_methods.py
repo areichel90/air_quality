@@ -8,5 +8,11 @@ class Sensor:
         reset_pin = None
         self.pm25 = PM25_I2C(uart, reset_pin)
 
+    def measure(self):
+        return self.pm25.read()
+
 if __name__ == "__main__":
+
+    sensor = Sensor()
+    reading = sensor.measure()
     print("script complete.")
