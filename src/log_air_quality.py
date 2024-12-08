@@ -42,6 +42,8 @@ if __name__ == "__main__":
             logfile.to_csv(os.path.join(output_path, filename+".csv"), index=False)
             print(logfile)
         else:
-            df_reading.to_csv(os.path.join(output_path, filename+".csv"), index=False)
+            _filename = filename+".csv"
+            print("writing logfile to disk: ", _filename)
+            df_reading.to_csv(os.path.join(output_path, _filename), index=False)
 
         iters += 1
