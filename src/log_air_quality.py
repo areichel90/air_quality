@@ -60,5 +60,6 @@ if __name__ == "__main__":
     for col in logfile.columns:
         if "particle" in col:
             ax.plot(logfile[col])
-
-    plt.show()
+    outpath = os.path.join(output_path, "test_vis.png")
+    print(f"saving image to: ", outpath)
+    plt.savefig(outpath)
