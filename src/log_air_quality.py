@@ -24,7 +24,8 @@ if __name__ == "__main__":
     # create log file
     starttime_time = datetime.now()
     print(starttime_time, ">> ", starttime_time.minute)
-    filename = f"logFile-{starttime_time.year}{starttime_time.day}_{starttime_time.hour}{starttime_time.minute}"
+    filename = f"logFile-{starttime_time.year}{starttime_time.day}-" \
+               f"{str(starttime_time.hour).zfill(2)}{str(starttime_time.minute).zfill(2)}"
     print(filename)
 
     # setup logging and write file to disk
@@ -49,9 +50,11 @@ if __name__ == "__main__":
             _filename = filename+".csv"
             print("writing logfile to disk: ", _filename)
             df_reading.to_csv(os.path.join(output_path, _filename), index=False)
-        print(logfile)
+            logfile = df_reading
         iters += 1
+        time.sleep(1)
 
+    print(logfile)
     # visualize
     fig = plt.figure(figsize=(16,8))
     ax = fig.add_subplot()
@@ -61,4 +64,4 @@ if __name__ == "__main__":
             ax.plot(logfile[col], label=col)
     outpath = os.path.join(output_path, f"test_vis_{starttime_time.hour}{starttime_time.minute}.png")
     print(f"saving image to: ", outpath)
-    plt.savefig(outpath)
+    #plt.savefig(outpath)
