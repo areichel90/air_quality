@@ -24,7 +24,7 @@ if __name__ == "__main__":
     # create log file
     starttime_time = datetime.now()
     print(starttime_time, ">> ", starttime_time.minute)
-    filename = f"logFile-{starttime_time.year}{starttime_time.day}-" \
+    filename = f"logFile-{starttime_time.year}{starttime_time.month}{starttime_time.day}-" \
                f"{str(starttime_time.hour).zfill(2)}{str(starttime_time.minute).zfill(2)}"
     print(filename)
 
@@ -60,8 +60,9 @@ if __name__ == "__main__":
     ax = fig.add_subplot()
 
     for col in logfile.columns:
-        if "particle" in col:
-            ax.plot(logfile[col], label=col)
+        if "standard" in col:
+            pass
+            #ax.plot(logfile[col], label=col)
     outpath = os.path.join(output_path, f"test_vis_{starttime_time.hour}{starttime_time.minute}.png")
     print(f"saving image to: ", outpath)
     #plt.savefig(outpath)

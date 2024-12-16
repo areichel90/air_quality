@@ -13,17 +13,28 @@ if __name__ == "__main__":
     df_data = pd.DataFrame()
     for file in files:
         print(file)
+        fileday = file.split("/")[-1].split("-")[1]
         filetime = file.split("/")[-1].split("-")[-1]
         filetime = filetime.replace(".csv", "")
         print(filetime)
         df_logfile = pd.read_csv(file)
-        df_logfile["time"] = filetime
-        #df_logfile["hour"] = filetime.split("_")[-1]
+        df_logfile["day"] = fileday[4:]
+        #df_logfile["time"] = filetime
+        df_logfile["hr"] = filetime[:2]
+        df_logfile["min"] = filetime[2:]
+
+        particle_cols = [col for col in df_logfile.columns if "standard" in col]
+        df_particles = df_logfile[particle_cols]
+        print(df_particles)
+        df_logfile["_particles 03um"] = df_particles.apply(lambda x: x[0] - x[1:].sum(), axis=1)
+        df_logfile["_particles 05um"] = df_particles.apply(lambda x: x[1] - x[2:].sum(), axis=1)
+        df_logfile["_particles 10um"] = df_particles.apply(lambda x: x[2] - x[3:].sum(), axis=1)
+
         df_data = pd.concat([df_logfile, df_data])
 
-    df_data = df_data.sort_values("time")
+    df_data = df_data.sort_values(["hr", "min"])
     df_data = df_data.reset_index(drop=True)
-    print(df_data)
+    print(df_data.iloc[:,6:])
     particle_cols = [col for col in df_data.columns if "particle" in col]
     print(df_data[particle_cols].describe())
 
